@@ -48,7 +48,7 @@ export const getFromSessionStorage = (key: string): unknown => {
 
 export const loadAppData = async (): Promise<{ Featured: Video; TendingNow: Video[] }> => {
   try {
-    const response = await fetch('/data.json');
+    const response = await fetch('../../data.json');
     const data = await response.json();
     return data;
   } catch (error) {
