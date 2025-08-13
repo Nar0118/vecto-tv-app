@@ -1,0 +1,24 @@
+.homepage {
+  min-height: 100vh;
+  background: #000; /* pure black */
+  background-image: radial-gradient(1200px 600px at 15% 10%, rgba(255,255,255,0.04) 0%, transparent 60%),
+                    radial-gradient(1200px 600px at 85% 90%, rgba(255,255,255,0.03) 0%, transparent 60%);
+  display: flex;
+  position: relative;
+}
+
+.main-content {
+  flex: 1;
+  margin-left: 80px;
+  overflow-x: hidden;
+}
+
+@media (max-width: 768px) {
+  .main-content { margin-left: 0; padding: 20px; }
+}
+
+@media (max-width: 480px) {
+  .main-content {
+    padding: 16px;
+  }
+}
