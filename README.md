@@ -2,6 +2,7 @@
 
 A modern, responsive React-based TV streaming application with a beautiful UI and smooth animations. Built with TypeScript, Redux Toolkit, and Framer Motion for an exceptional user experience.
 
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Visit%20App-green?style=for-the-badge&logo=vercel)](https://vecto-tv-app.vercel.app/)
 ![Vecto TV App](https://img.shields.io/badge/React-19.1.1-blue?style=for-the-badge&logo=react)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.8.3-blue?style=for-the-badge&logo=typescript)
 ![Vite](https://img.shields.io/badge/Vite-7.1.2-purple?style=for-the-badge&logo=vite)
@@ -19,6 +20,10 @@ A modern, responsive React-based TV streaming application with a beautiful UI an
 - **Modern UI/UX**: Clean, intuitive interface with hover effects and visual feedback
 
 ## 🚀 Quick Start
+
+### 🌐 Live Demo
+
+**Try the application live:** [https://vecto-tv-app.vercel.app/](https://vecto-tv-app.vercel.app/)
 
 ### Prerequisites
 
