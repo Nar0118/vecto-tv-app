@@ -6,7 +6,6 @@ import { loadAppData, sortVideosByLastClicked, getFromSessionStorage, saveToSess
 import Sidebar from '@/components/Sidebar/Sidebar';
 import FeaturedVideo from '@/components/FeaturedVideo/FeaturedVideo';
 import TrendingNow from '@/components/TrendingNow/TrendingNow';
-import './HomePage.css';
 
 const HomePage: React.FC = () => {
   const dispatch = useDispatch();
@@ -34,13 +33,19 @@ const HomePage: React.FC = () => {
 
   return (
     <motion.div
-      className="homepage"
+      className="min-h-screen bg-black relative flex bg-gradient-radial"
+      style={{
+        backgroundImage: `
+          radial-gradient(1200px 600px at 15% 10%, rgba(255,255,255,0.04) 0%, transparent 60%),
+          radial-gradient(1200px 600px at 85% 90%, rgba(255,255,255,0.03) 0%, transparent 60%)
+        `
+      }}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
     >
       <Sidebar />
-      <main className="main-content">
+      <main className="flex-1 ml-20 overflow-x-hidden md:ml-20 md:p-5 p-4">
         <FeaturedVideo />
         <TrendingNow />
       </main>

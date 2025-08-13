@@ -4,7 +4,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import type { RootState } from '@/store';
 import { setVideoPlaying } from '@/store/appSlice';
 import { formatDuration } from '@/utils';
-import './FeaturedVideo.css';
 
 const FeaturedVideo: React.FC = () => {
   const dispatch = useDispatch();
@@ -44,8 +43,8 @@ const FeaturedVideo: React.FC = () => {
 
   if (!featuredVideo) {
     return (
-      <div className="featured-video">
-        <div className="featured-placeholder">
+      <div className="relative w-full h-[600px] overflow-hidden rounded-2xl mb-10 bg-black">
+        <div className="w-full h-full flex items-center justify-center bg-black">
           <div className="loading-spinner"></div>
         </div>
       </div>
@@ -53,12 +52,12 @@ const FeaturedVideo: React.FC = () => {
   }
 
   return (
-    <div className="featured-video">
+    <div className="relative w-full h-[600px] overflow-hidden rounded-2xl mb-10 bg-black">
       <AnimatePresence mode="wait">
         {isVideoPlaying && resolvedVideoUrl ? (
           <motion.div
             key="video-background"
-            className="video-background"
+            className="relative"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -70,14 +69,14 @@ const FeaturedVideo: React.FC = () => {
               muted
               loop
               playsInline
-              className="background-video"
+              className="w-full h-full object-cover"
             />
-            <div className="video-overlay"></div>
+            <div className="absolute inset-0 bg-gradient-to-r from-black/95 via-black/60 to-black/20"></div>
           </motion.div>
         ) : (
           <motion.div
             key="image-background"
-            className="image-background"
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat brightness-75"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -87,33 +86,41 @@ const FeaturedVideo: React.FC = () => {
         )}
       </AnimatePresence>
 
-      <div className="featured-content">
+      <div className="absolute inset-0 flex items-center p-5">
         <motion.div
-          className="featured-info"
+          className="max-w-2xl text-white"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.15 }}
         >
-          <div className="featured-category">{featuredVideo.Category}</div>
+          <div className="text-sm font-semibold text-white/70 uppercase tracking-wider mb-4">
+            {featuredVideo.Category}
+          </div>
           {featuredVideo.TitleImage ? (
             <img
-              className="featured-title-image"
+              className="w-full max-w-[560px] h-auto mb-4 drop-shadow-2xl"
               src={`/assets/${featuredVideo.TitleImage}`}
               alt={featuredVideo.Title}
             />
           ) : (
-            <h1 className="featured-title">{featuredVideo.Title}</h1>
+            <h1 className="text-6xl font-extrabold mb-4 leading-tight">
+              {featuredVideo.Title}
+            </h1>
           )}
-          <div className="featured-metadata">
+          <div className="flex items-center gap-4 mb-4 text-sm text-white/90">
             <span>{featuredVideo.ReleaseYear}</span>
-            <span className="rating">{featuredVideo.MpaRating}</span>
+            <span className="bg-white/18 px-2 py-1 rounded text-xs font-bold">
+              {featuredVideo.MpaRating}
+            </span>
             <span>{formatDuration(featuredVideo.Duration)}</span>
           </div>
-          <p className="featured-description">{featuredVideo.Description}</p>
+          <p className="text-base leading-relaxed text-white/92 mb-7 max-w-lg">
+            {featuredVideo.Description}
+          </p>
           
-          <div className="featured-actions">
+          <div className="flex gap-4">
             <motion.button
-              className="play-button"
+              className="flex items-center gap-2.5 px-8 py-2.5 rounded-full text-base font-bold cursor-pointer bg-white text-black hover:bg-white/90 disabled:opacity-55 disabled:cursor-not-allowed"
               onClick={handlePlayClick}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -126,7 +133,7 @@ const FeaturedVideo: React.FC = () => {
             </motion.button>
             
             <motion.button
-              className="more-info-button"
+              className="flex items-center gap-2.5 px-8 py-2.5 rounded-full text-base font-bold cursor-pointer bg-primary text-white hover:bg-primary-hover"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >

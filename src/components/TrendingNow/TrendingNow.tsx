@@ -5,7 +5,6 @@ import type { RootState } from '@/store';
 import { selectVideo, setVideoPlaying } from '@/store/appSlice';
 import type { Video } from '@/types';
 import { saveToSessionStorage } from '@/utils';
-import './TrendingNow.css';
 
 const TrendingNow: React.FC = () => {
   const dispatch = useDispatch();
@@ -65,9 +64,9 @@ const TrendingNow: React.FC = () => {
 
   if (!trendingVideos.length) {
     return (
-      <div className="trending-now">
-        <h2 className="trending-title">Trending Now</h2>
-        <div className="trending-placeholder">
+      <div className="mb-10">
+        <h2 className="text-3xl font-bold text-white mb-6">Trending Now</h2>
+        <div className="flex items-center justify-center h-[300px] bg-gradient-to-br from-gray-800 to-gray-900 rounded-lg">
           <div className="loading-spinner"></div>
         </div>
       </div>
@@ -75,12 +74,12 @@ const TrendingNow: React.FC = () => {
   }
 
   return (
-    <div className="trending-now">
-      <div className="trending-header">
-        <h2 className="trending-title">Trending Now</h2>
-        <div className="trending-controls">
+    <div className="mb-10">
+      <div className="flex justify-between items-center mb-6 md:flex-row flex-col md:items-start md:gap-4">
+        <h2 className="text-3xl font-bold text-white md:text-2xl">Trending Now</h2>
+        <div className="flex gap-3 md:self-end">
           <button
-            className="scroll-button"
+            className="w-10 h-10 border-none rounded-full bg-white/10 text-white cursor-pointer flex items-center justify-center transition-all duration-200 backdrop-blur-md hover:bg-white/20 hover:scale-105 active:scale-95"
             onClick={() => scrollToDirection('left')}
             aria-label="Scroll left"
           >
@@ -92,7 +91,7 @@ const TrendingNow: React.FC = () => {
             </svg>
           </button>
           <button
-            className="scroll-button"
+            className="w-10 h-10 border-none rounded-full bg-white/10 text-white cursor-pointer flex items-center justify-center transition-all duration-200 backdrop-blur-md hover:bg-white/20 hover:scale-105 active:scale-95"
             onClick={() => scrollToDirection('right')}
             aria-label="Scroll right"
           >
@@ -108,7 +107,7 @@ const TrendingNow: React.FC = () => {
 
       <div
         ref={carouselRef}
-        className="trending-carousel"
+        className="flex gap-4 overflow-x-auto overflow-y-hidden py-2 scroll-smooth scrollbar-hide"
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
@@ -118,7 +117,9 @@ const TrendingNow: React.FC = () => {
         {trendingVideos.slice(0, 50).map((video, index) => (
           <motion.div
             key={video.Id}
-            className={`trending-item ${lastClickedVideoId === video.Id ? 'selected' : ''}`}
+            className={`flex-shrink-0 w-48 cursor-pointer rounded-lg overflow-hidden relative transition-transform duration-200 md:w-36 ${
+              lastClickedVideoId === video.Id ? 'border-2 border-blue-500 shadow-[0_0_20px_rgba(0,123,255,0.5)]' : ''
+            }`}
             onClick={() => handleVideoClick(video)}
             whileHover={{ scale: 1.05, zIndex: 10 }}
             whileTap={{ scale: 0.95 }}
@@ -127,18 +128,21 @@ const TrendingNow: React.FC = () => {
             transition={{ duration: 0.3, delay: index * 0.05 }}
             style={{ pointerEvents: isDragging ? 'none' : 'auto' }}
           >
-            <div className="video-cover">
+            <div className="relative w-full h-[300px] overflow-hidden rounded-lg md:h-[225px]">
               <img
                 src={`/assets/${video.CoverImage}`}
                 alt={video.Title}
                 loading="lazy"
+                className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
               />
-              <div className="video-overlay">
-                <div className="video-info">
-                  <h3 className="video-title">{video.Title}</h3>
-                  <div className="video-meta">
+              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/60 to-transparent p-5 opacity-0 transition-opacity duration-300 hover:opacity-100">
+                <div className="text-white">
+                  <h3 className="text-sm font-semibold mb-2 leading-tight">{video.Title}</h3>
+                  <div className="flex items-center gap-2 text-xs text-white/80">
                     <span>{video.ReleaseYear}</span>
-                    <span className="rating">{video.MpaRating}</span>
+                    <span className="bg-white/20 px-1.5 py-0.5 rounded text-xs font-semibold">
+                      {video.MpaRating}
+                    </span>
                   </div>
                 </div>
               </div>

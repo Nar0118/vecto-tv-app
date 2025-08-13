@@ -1,56 +1,70 @@
-:root {
-  --primary-color: #1631ff;
-  --primary-hover: #0b26f8;
-  --background-dark: #000000;
-  --background-light: #0f0f0f;
-  --text-primary: #ffffff;
-  --text-secondary: rgba(255, 255, 255, 0.86);
-  --text-muted: rgba(255, 255, 255, 0.64);
-  --border-color: rgba(255, 255, 255, 0.1);
-  --shadow-light: rgba(255, 255, 255, 0.1);
-  --shadow-dark: rgba(0, 0, 0, 0.5);
-  --transition-fast: 0.2s ease;
-  --transition-normal: 0.3s ease;
-  --border-radius: 12px;
-  --border-radius-large: 16px;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+      Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background: #000000;
+    color: #ffffff;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+  
+  #root {
+    min-height: 100vh;
+  }
+  
+  /* Scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.06);
+    border-radius: 4px;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.32);
+    border-radius: 4px;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.46);
+  }
+  
+  /* Focus */
+  button:focus,
+  input:focus,
+  textarea:focus,
+  select:focus {
+    outline: 2px solid #1631ff;
+    outline-offset: 2px;
+  }
+  
+  ::selection {
+    background: rgba(22, 49, 255, 0.35);
+    color: #fff;
+  }
 }
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; }
-
-body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
-    Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background: var(--background-dark);
-  color: var(--text-primary);
-  line-height: 1.6;
-  overflow-x: hidden;
+@layer components {
+  .loading-spinner {
+    @apply w-10 h-10 border-[3px] border-white/10 border-t-primary rounded-full animate-spin;
+  }
 }
-
-#root { min-height: 100vh; }
-
-/* Scrollbar */
-::-webkit-scrollbar { width: 8px; height: 8px; }
-::-webkit-scrollbar-track { background: rgba(255,255,255,0.06); border-radius: 4px; }
-::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.32); border-radius: 4px; }
-::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.46); }
-
-/* Focus */
-button:focus, input:focus, textarea:focus, select:focus {
-  outline: 2px solid var(--primary-color);
-  outline-offset: 2px;
-}
-
-::selection { background: rgba(22, 49, 255, 0.35); color: #fff; }
-
-.loading-spinner {
-  width: 40px; height: 40px;
-  border: 3px solid var(--shadow-light);
-  border-top: 3px solid var(--primary-color);
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-}
-
-@keyframes spin { 0%{ transform: rotate(0deg);} 100%{ transform: rotate(360deg);} }

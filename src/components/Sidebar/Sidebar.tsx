@@ -4,7 +4,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import type { RootState } from '@/store';
 import { setMenuOpen } from '@/store/appSlice';
 import type { MenuItem } from '@/types';
-import './Sidebar.css';
 
 const menuItems: MenuItem[] = [
   { id: 'search', label: 'Search', icon: '/assets/icons/ICON - Search.png', path: '/search' },
@@ -29,7 +28,7 @@ const Sidebar: React.FC = () => {
 
   return (
     <motion.div
-      className="sidebar"
+      className="fixed left-0 top-0 h-screen bg-black/90 backdrop-blur-md z-50 overflow-hidden flex flex-col"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       initial={{ width: 80 }}
@@ -39,7 +38,7 @@ const Sidebar: React.FC = () => {
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div
-            className="sidebar-overlay"
+            className="absolute inset-0 bg-black/80 pointer-events-none"
             initial={{ opacity: 0 }}
             animate={{ opacity: 0.8 }}
             exit={{ opacity: 0 }}
@@ -48,39 +47,41 @@ const Sidebar: React.FC = () => {
         )}
       </AnimatePresence>
 
-      <div className="sidebar-content">
+      <div className="relative z-10 h-full flex flex-col py-5 pt-28">
         <AnimatePresence>
           {isMenuOpen && (
             <motion.div
-              className="profile-section"
+              className="px-5 pb-5 border-b border-white/10 mb-5"
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -20 }}
               transition={{ duration: 0.2, delay: 0.1 }}
             >
-              <div className="profile-info">
-                <div className="profile-avatar">
-                  <img src="/assets/icons/avatar.png" alt="Profile" />
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-full overflow-hidden bg-gray-700 flex items-center justify-center">
+                  <img src="/assets/icons/avatar.png" alt="Profile" className="w-full h-full object-cover" />
                 </div>
-                <span className="profile-name">Daniel</span>
+                <span className="text-white text-base font-medium">Daniel</span>
               </div>
             </motion.div>
           )}
         </AnimatePresence>
 
-        <nav className="nav-menu">
+        <nav className="flex-1 flex flex-col gap-2">
           {menuItems.map((item) => (
             <motion.div
               key={item.id}
-              className={`nav-item ${item.id === 'home' ? 'active' : ''}`}
+              className={`flex items-center gap-4 px-4 py-3 rounded-xl cursor-pointer transition-all duration-200 min-h-12 hover:bg-white/8 ${
+                item.id === 'home' ? 'bg-[#3b486d]' : ''
+              }`}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              <img src={item.icon} alt={item.label} className="nav-icon" />
+              <img src={item.icon} alt={item.label} className="w-6 h-6 object-contain flex-shrink-0" />
               <AnimatePresence>
                 {isMenuOpen && (
                   <motion.span
-                    className="nav-label"
+                    className="text-white text-sm font-medium whitespace-nowrap"
                     initial={{ opacity: 0, x: -10 }}
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: -10 }}
@@ -97,15 +98,15 @@ const Sidebar: React.FC = () => {
         <AnimatePresence>
           {isMenuOpen && (
             <motion.div
-              className="additional-menu"
+              className="p-5 border-t border-white/10 mt-auto text-left"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 20 }}
               transition={{ duration: 0.2, delay: 0.2 }}
             >
-              <div className="additional-item">LANGUAGE</div>
-              <div className="additional-item">GET HELP</div>
-              <div className="additional-item">EXIT</div>
+              <div className="text-white/70 text-lg font-medium py-2 cursor-pointer transition-colors duration-200 hover:text-white">LANGUAGE</div>
+              <div className="text-white/70 text-lg font-medium py-2 cursor-pointer transition-colors duration-200 hover:text-white">GET HELP</div>
+              <div className="text-white/70 text-lg font-medium py-2 cursor-pointer transition-colors duration-200 hover:text-white">EXIT</div>
             </motion.div>
           )}
         </AnimatePresence>
